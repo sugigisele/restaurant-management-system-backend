@@ -6,7 +6,7 @@ import java.util.UUID;
 import jakarta.persistence.*;
 
 @Entity 
-@Table(name = "Waiter")
+@Table(name = "waiter")
 
 public class Waiter {
 
@@ -50,13 +50,17 @@ public String getLastName() {
     return lastName;
 }
 
-public void setLastName(String lastname) {
+public void setLastName(String lastName) {
     this.lastName = lastName;
 
 }
 
-public String grtPhone() {
+public String getPhone() {
     return phone;
+}
+
+public void setPhone(String phone) {
+    this.phone = phone;
 }
 
 public DiningTable getDiningTable() {

@@ -16,7 +16,7 @@ public class Station {
     private UUID id;
 
     private String name;
-    
+
     @ManyToMany (mappedBy = "stations")
     @JsonIgnore
     private List<Waiter> waiters;
@@ -26,7 +26,7 @@ public class Station {
         return id;
     }
 
-    public void setId(UUID ID) {
+    public void setId(UUID id) {
         this.id = id;
     }
 

@@ -53,7 +53,7 @@ public class Guest {
     public void setPhone(String phone) {
         this.phone = phone;
     }
-    public String getemail() {
+    public String getEmail() {
         return email;
     }
     public void setEmail(String email) {

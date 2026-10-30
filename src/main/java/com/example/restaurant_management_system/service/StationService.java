@@ -47,8 +47,7 @@ public class StationService {
         return "The station with that id does not exist";
     }
 
-    public Optional<Station> getById(UUID id) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'getById'");
+    public  Optional<Station> getById(UUID id) {
+        return stationRepository.findById(id);
     }
 }

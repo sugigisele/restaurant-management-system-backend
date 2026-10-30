@@ -31,7 +31,7 @@ public class Reservation {
     private int partySize;
 
     @ManyToOne 
-    @JoinColumn(name = "waiter id")
+    @JoinColumn(name = "waiter_id")
     private Waiter waiter;
 
     @ManyToOne 
