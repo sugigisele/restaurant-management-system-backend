@@ -41,6 +41,12 @@ public class DiningTableController {
         return new ResponseEntity<>("The diningTable with that id does not exist", HttpStatus.NOT_FOUND);
     }
 }
+
+    @GetMapping ("/free")
+    public ResponseEntity<List<DiningTable>> getFree() {
+        return new ResponseEntity<>(diningTableService.getFree(), HttpStatus.OK);
+    }
+    
     @PutMapping ("/update/{id}")
     public ResponseEntity<Object> update(@PathVariable  UUID id, @RequestBody DiningTable diningTable) {
         Optional<DiningTable> update = diningTableService.update(id, diningTable);

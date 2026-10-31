@@ -26,6 +26,10 @@ public class DiningTableService {
         return diningTableRepository.findAll();
     }
 
+    public List<DiningTable> getFree() {
+        return diningTableRepository.findFreeDiningTables();
+    }
+
     public Optional<DiningTable> getById(UUID id) {
         return diningTableRepository.findById(id);
     }
