@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import com.example.restaurant_management_system.model.Guest;
 import com.example.restaurant_management_system.repository.GuestRepository;
+import com.example.restaurant_management_system.repository.WaiterRepository;
 
 @Service 
 public class GuestService {
@@ -16,6 +17,9 @@ public class GuestService {
 
     @Autowired 
     private GuestRepository guestRepository;
+
+    @Autowired 
+    private WaiterRepository waiterRepository;
 
     public String save(Guest guest) {
         guestRepository.save(guest);
@@ -49,6 +53,13 @@ public class GuestService {
 
     public List<Guest> getByLastName(String lastName) {
         return guestRepository.findByLastNameIgnoreCaseOrderByFirstNameAsc(lastName);
+    }
+
+    public Optional<List<Guest>> getOfWaiter(UUID waiterId){
+        if (waiterRepository.existsById(waiterId)){
+            return Optional.of(guestRepository.findGuestsOfWaiter(waiterId));
+        }
+        return Optional.empty();
     }
 }
 

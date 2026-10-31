@@ -47,6 +47,16 @@ public class GuestController {
         return new ResponseEntity<>(guestService.getByLastName(lastName), HttpStatus.OK);
     }
 
+    @GetMapping ("/of-waiter/{waiterId}")
+    public ResponseEntity<Object> getOfWaiter(@PathVariable("waiterId") UUID waiterId){
+        Optional<List<Guest>> guest = guestService.getOfWaiter(waiterId);
+        if (guest.isPresent()) {
+            return new ResponseEntity<>(guest.get(), HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>("The waiter with that id does not exist", HttpStatus.NOT_FOUND);
+        }
+    }
+
     @PutMapping ("/update/{id}")
     public ResponseEntity<Object> update(@PathVariable  UUID id, @RequestBody Guest Guest) {
         Optional<Guest> update = guestService.update(id, Guest);
