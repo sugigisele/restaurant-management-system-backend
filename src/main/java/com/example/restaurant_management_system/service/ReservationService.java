@@ -1,5 +1,6 @@
 package com.example.restaurant_management_system.service;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -83,6 +84,10 @@ public class ReservationService {
 
     public List<Reservation> getByStatus(ReservationStatus status) {
         return reservationRepository.findByStatusOrderByReservationDateAsc(status);
+    }
+
+    public List<Reservation> getBetween(LocalDate start, LocalDate end) {
+        return reservationRepository.findByReservationDateBetweenOrderByReservationDateAsc(start, end);
     }
     
 }

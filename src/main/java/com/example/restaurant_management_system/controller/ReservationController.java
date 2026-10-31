@@ -1,5 +1,6 @@
 package com.example.restaurant_management_system.controller;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -55,6 +56,13 @@ public class ReservationController {
         } else {
             return new ResponseEntity<>("The reservation with that id does not exist", HttpStatus.NOT_FOUND);
         }
+    }
+
+    @GetMapping ("/between")
+    public ResponseEntity<List<Reservation>> getBetween(@RequestParam  String start, @RequestParam  String end){
+        LocalDate startDate = LocalDate.parse(start);
+        LocalDate endDate = LocalDate.parse(end);
+        return new ResponseEntity<>(reservationService.getBetween(startDate, endDate), HttpStatus.OK);
     }
 
     @DeleteMapping ("/delete/{id}")
