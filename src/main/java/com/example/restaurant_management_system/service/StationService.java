@@ -26,6 +26,10 @@ public class StationService {
         return stationRepository.findAll();
     }
 
+    public List<Station> getUnused() {
+        return stationRepository.findUnusedStations();
+    }
+
     public Optional<Station> update(UUID id) {
         return stationRepository.findById(id);
     }

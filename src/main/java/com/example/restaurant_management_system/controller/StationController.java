@@ -46,6 +46,11 @@ public class StationController {
         return new ResponseEntity<>("The station with that id does not exist", HttpStatus.NOT_FOUND);
     }
 }
+    @GetMapping ("/unused")
+    public ResponseEntity<List<Station>> getUnused() {
+        return new ResponseEntity<>(stationService.getUnused(), HttpStatus.OK);
+    }
+    
     @PutMapping ("/update/{id}")
     public ResponseEntity<Object> update(@PathVariable  UUID id, @RequestBody Station station) {
         Optional<Station> update = stationService.update(id, station);
