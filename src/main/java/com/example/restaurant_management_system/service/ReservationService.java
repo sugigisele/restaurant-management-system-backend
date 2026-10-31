@@ -1,6 +1,5 @@
 package com.example.restaurant_management_system.service;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -10,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import com.example.restaurant_management_system.model.Guest;
 import com.example.restaurant_management_system.model.Reservation;
+import com.example.restaurant_management_system.model.ReservationStatus;
 import com.example.restaurant_management_system.model.Waiter;
 import com.example.restaurant_management_system.repository.GuestRepository;
 import com.example.restaurant_management_system.repository.ReservationRepository;
@@ -47,10 +47,9 @@ public class ReservationService {
                     }
                 }
             }
+        
         }
         
-
-
 
     public String save(Reservation reservation) {
         reservationRepository.save(reservation);
@@ -82,5 +81,8 @@ public class ReservationService {
         return "The reservation with that id does not exist";
     }
 
+    public List<Reservation> getByStatus(ReservationStatus status) {
+        return reservationRepository.findByStatusOrderByReservationDateAsc(status);
+    }
     
 }

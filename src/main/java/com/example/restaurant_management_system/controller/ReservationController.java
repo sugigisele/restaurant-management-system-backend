@@ -10,6 +10,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import com.example.restaurant_management_system.model.Reservation;
+import com.example.restaurant_management_system.model.ReservationStatus;
 import com.example.restaurant_management_system.service.ReservationService;
 
 @RestController 
@@ -41,6 +42,11 @@ public class ReservationController {
         return new ResponseEntity<>("The Reservation with that id does not exist", HttpStatus.NOT_FOUND);
     }
 }
+
+    @GetMapping ("/by-status")
+    public ResponseEntity<List<Reservation>> getByStatus(@RequestParam ReservationStatus status) {
+        return new ResponseEntity<>(reservationService.getByStatus(status), HttpStatus.OK);
+    }
     @PutMapping ("/update/{id}")
     public ResponseEntity<Object> update(@PathVariable  UUID id, @RequestBody Reservation Reservation) {
         Optional<Reservation> update = reservationService.update(id, Reservation);
