@@ -61,6 +61,9 @@ public class WaiterService {
     public List<Waiter> getAll() {
         return waiterRepository.findAll();
     }
+    public  List<Waiter> getByStation(String name) {
+        return waiterRepository.findWaitersByStationName(name);
+    }
 
     public Optional<Waiter> getById(UUID id) {
         return waiterRepository.findById(id);

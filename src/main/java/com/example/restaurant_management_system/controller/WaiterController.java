@@ -41,6 +41,12 @@ public class WaiterController {
         return new ResponseEntity<>("The waiter with that id does not exist", HttpStatus.NOT_FOUND);
     }
 }
+
+    @GetMapping ("/by-station")
+    public ResponseEntity<List<Waiter>> getByStation(@RequestParam ("name") String name) {
+        return new ResponseEntity<>(waiterService.getByStation(name), HttpStatus.OK);
+    }
+    
     @PutMapping ("/update/{id}")
     public ResponseEntity<Object> update(@PathVariable  UUID id, @RequestBody Waiter waiter) {
         Optional<Waiter> update = waiterService.update(id, waiter);
