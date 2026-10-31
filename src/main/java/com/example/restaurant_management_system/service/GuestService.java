@@ -46,5 +46,9 @@ public class GuestService {
         }
         return "The Guest with that id does not exist";
     }
+
+    public List<Guest> getByLastName(String lastName) {
+        return guestRepository.findByLastNameIgnoreCaseOrderByFirstNameAsc(lastName);
+    }
 }
 

@@ -41,6 +41,12 @@ public class GuestController {
         return new ResponseEntity<>("The Guest with that id does not exist", HttpStatus.NOT_FOUND);
     }
 }
+
+    @GetMapping ("/by-last-name")
+    public ResponseEntity<List<Guest>> getByLastName(@RequestParam ("lastName") String lastName) {
+        return new ResponseEntity<>(guestService.getByLastName(lastName), HttpStatus.OK);
+    }
+
     @PutMapping ("/update/{id}")
     public ResponseEntity<Object> update(@PathVariable  UUID id, @RequestBody Guest Guest) {
         Optional<Guest> update = guestService.update(id, Guest);
