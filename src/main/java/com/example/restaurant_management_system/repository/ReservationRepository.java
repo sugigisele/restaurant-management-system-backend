@@ -9,9 +9,11 @@ import org.springframework.stereotype.Repository;
 
 import com.example.restaurant_management_system.model.Reservation;
 import com.example.restaurant_management_system.model.ReservationStatus;
+import com.example.restaurant_management_system.model.Waiter;
 
 @Repository 
 public interface ReservationRepository extends JpaRepository<Reservation, UUID> {
     List<Reservation> findByStatusOrderByReservationDateAsc(ReservationStatus status);
     List<Reservation> findByReservationDateBetweenOrderByReservationDateAsc(LocalDate start, LocalDate end);
+    boolean existsByWaiterAndReservationDateAndStatusNot(Waiter waiter, LocalDate reservationDate, ReservationStatus status);
 }

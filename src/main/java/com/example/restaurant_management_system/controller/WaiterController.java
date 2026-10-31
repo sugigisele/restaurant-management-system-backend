@@ -46,7 +46,7 @@ public class WaiterController {
     public ResponseEntity<List<Waiter>> getByStation(@RequestParam ("name") String name) {
         return new ResponseEntity<>(waiterService.getByStation(name), HttpStatus.OK);
     }
-    
+
     @PutMapping ("/update/{id}")
     public ResponseEntity<Object> update(@PathVariable  UUID id, @RequestBody Waiter waiter) {
         Optional<Waiter> update = waiterService.update(id, waiter);
@@ -63,6 +63,29 @@ public class WaiterController {
         if (message.equals("Waiter  deleted successfully")) {
             return new ResponseEntity<>(message, HttpStatus.OK);
         } else {
+            return new ResponseEntity<>(message, HttpStatus.NOT_FOUND);
+        }
+    }
+
+    @PutMapping ("/{waiterId}/stations/{stationId}")
+    public ResponseEntity<String> addStation(@PathVariable("waiterId") UUID waiterId, @PathVariable ("stationId") UUID stationId) {
+        String message = waiterService.addStation(waiterId, stationId);
+        if (message.equals("Station added to the waiter")) {
+            return new ResponseEntity<>(message, HttpStatus.OK);   
+        } else if(message.equals("The waiter already has that station")){
+            return new ResponseEntity<>(message, HttpStatus.CONFLICT);
+        }else {
+            return new ResponseEntity<>(message, HttpStatus.NOT_FOUND);
+        }
+    }
+    @PatchMapping ("/{waiterId}/dining-table")
+    public ResponseEntity<String> changeDiningTable(@PathVariable("waiterId") UUID waiterId, @RequestParam ("tableNumber") int tableNumber) {
+        String message = waiterService.changeDiningTable(waiterId, tableNumber);
+        if (message.equals("Dining table changed successfully")) {
+            return new ResponseEntity<>(message, HttpStatus.OK);   
+        } else if(message.equals("That dining table is taken by another waiter")){
+            return new ResponseEntity<>(message, HttpStatus.CONFLICT);
+        }else {
             return new ResponseEntity<>(message, HttpStatus.NOT_FOUND);
         }
     }

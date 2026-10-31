@@ -53,6 +53,22 @@ public class ReservationService {
         
 
     public String save(Reservation reservation) {
+        if (reservation.getReservationDate() != null){
+            if (reservation.getReservationDate().isBefore(LocalDate.now())) {
+                 return "Reservation date cannot be in the past";
+            }
+        }
+
+        attachRelations(reservation);
+
+        if (reservation.getWaiter()!= null) {
+            boolean busy = reservationRepository.existsByWaiterAndReservationDateAndStatusNot( reservation.getWaiter(), reservation.getReservationDate(), ReservationStatus.CANCELLED);
+            if (busy) {
+                return "Waiter already has a reservation on that date";
+            }
+        }
+
+        reservation.setStatus(ReservationStatus.BOOKED);
         reservationRepository.save(reservation);
         return "Reservation saved successfully";
     }
@@ -66,8 +82,11 @@ public class ReservationService {
     }
 
     public Optional<Reservation> update(UUID id, Reservation reservation){
-        if (reservationRepository.existsById(id)){
+        Optional<Reservation> existing = reservationRepository.findById(id);
+        if (existing.isPresent()){
             reservation.setId(id);
+            reservation.setStatus(existing.get().getStatus());
+            attachRelations(reservation);
             return Optional.of(reservationRepository.save(reservation));
         }
         return Optional.empty();
@@ -88,6 +107,42 @@ public class ReservationService {
 
     public List<Reservation> getBetween(LocalDate start, LocalDate end) {
         return reservationRepository.findByReservationDateBetweenOrderByReservationDateAsc(start, end);
+    }
+
+    public String changeStatus(UUID id, ReservationStatus newStatus){
+        Optional<Reservation> found = reservationRepository. findById(id);
+        if (found.isEmpty()) {
+            return "The reservation with that id does not exist";
+        }
+
+        Reservation reservation = found.get();
+        ReservationStatus current = reservation.getStatus();
+
+        boolean allowed = false;
+
+        if (current == ReservationStatus.BOOKED) {
+            if (newStatus == ReservationStatus.ARRIVED) {
+                allowed = true;
+            }
+            if (newStatus == ReservationStatus.CANCELLED) {
+                allowed  = true;
+            }
+        }
+
+        if (current == ReservationStatus.ARRIVED) {
+            if (newStatus == ReservationStatus.SEATED) {
+                allowed = true;
+            }
+
+        }
+
+        if (allowed == false) {
+            return "Cannot change status from " + current + "to" + newStatus;
+        }
+
+        reservation.setStatus(newStatus);
+        reservationRepository.save(reservation);
+        return "Reservation status updated successfully";
     }
     
 }
