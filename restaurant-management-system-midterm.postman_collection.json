@@ -1,0 +1,28 @@
+{
+  "info": {
+    "name": "restaurant-management-system-midterm",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    { "name": "A1", "request": { "method": "GET", "header": [], "url": "http://localhost:8080/api/stations/all" } },
+    { "name": "A2", "request": { "method": "POST", "header": [], "url": "http://localhost:8080/api/guests/save" } },
+    { "name": "B1", "request": { "method": "GET", "header": [], "url": "http://localhost:8080/api/guests/by-last-name?lastName=ingabire" } },
+    { "name": "B2", "request": { "method": "GET", "header": [], "url": "http://localhost:8080/api/reservations/by-status?status=BOOKED" } },
+    { "name": "B3", "request": { "method": "GET", "header": [], "url": "http://localhost:8080/api/reservations/between?start=2026-10-01&end=2026-10-31" } },
+    { "name": "C1", "request": { "method": "GET", "header": [], "url": "http://localhost:8080/api/waiters/by-station?name=bar" } },
+    { "name": "C2", "request": { "method": "GET", "header": [], "url": "http://localhost:8080/api/dining-tables/free" } },
+    { "name": "C3", "request": { "method": "GET", "header": [], "url": "http://localhost:8080/api/stations/unused" } },
+    { "name": "C4", "request": { "method": "GET", "header": [], "url": "http://localhost:8080/api/guests/of-waiter/{{ericId}}" } },
+    { "name": "D1", "request": { "method": "POST", "header": [], "url": "http://localhost:8080/api/reservations/save" } },
+    { "name": "D2", "request": { "method": "PATCH", "header": [], "url": "http://localhost:8080/api/reservations/{{reservationId}}/status?status=ARRIVED" } },
+    { "name": "D3", "request": { "method": "PUT", "header": [], "url": "http://localhost:8080/api/waiters/{{jeanId}}/stations/{{pastryId}}" } },
+    { "name": "D4", "request": { "method": "PATCH", "header": [], "url": "http://localhost:8080/api/waiters/{{ericId}}/dining-table?tableNumber=1" } },
+    { "name": "E1", "request": { "method": "POST", "header": [], "url": "http://localhost:8080/api/order-lines/save?reservationId={{bookedReservationId}}" } },
+    { "name": "E2", "request": { "method": "GET", "header": [], "url": "http://localhost:8080/api/order-lines/guest/0788123456" } },
+    { "name": "E3", "request": { "method": "DELETE", "header": [], "url": "http://localhost:8080/api/order-lines/delete/{{orderLineId}}" } },
+    { "name": "F1", "request": { "method": "GET", "header": [], "url": "http://localhost:8080/api/reservations/stats/by-status" } },
+    { "name": "F2", "request": { "method": "PATCH", "header": [], "url": "http://localhost:8080/api/reservations/cancel-day?waiterId={{ericId}}&date=2026-10-20" } },
+    { "name": "Bonus-dashboard", "request": { "method": "GET", "header": [], "url": "http://localhost:8080/api/dashboard/summary" } },
+    { "name": "Bonus-page", "request": { "method": "GET", "header": [], "url": "http://localhost:8080/api/reservations/page?page=0&size=5&sort=reservationDate,desc" } }
+  ]
+}
