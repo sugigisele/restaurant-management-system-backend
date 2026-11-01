@@ -17,6 +17,8 @@ import com.example.restaurant_management_system.repository.OrderLineRepository;
 import com.example.restaurant_management_system.repository.ReservationRepository;
 import com.example.restaurant_management_system.repository.WaiterRepository;
 
+import jakarta.transaction.Transactional;
+
 @Service 
 public class ReservationService {
     
@@ -155,5 +157,15 @@ public class ReservationService {
     
     public List<Object[]> getStatsByStatus() {
         return reservationRepository.countByStatus();
+    }
+
+    @Transactional
+    public String cancelDay(UUID waiterId, LocalDate date) {
+        int count = reservationRepository.cancelDay(
+                waiterId,
+                date,
+                ReservationStatus.CANCELLED,
+                ReservationStatus.SEATED);
+        return count + " reservations cancelled";
     }
 }

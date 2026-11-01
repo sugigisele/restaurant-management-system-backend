@@ -93,5 +93,11 @@ public class ReservationController {
         }
     }
 
+    @PatchMapping("/cancel-day")
+    public ResponseEntity<String> cancelDay(@RequestParam("waiterId") UUID waiterId,@RequestParam("date") String date) {
+        LocalDate day = LocalDate.parse(date);
+        String message = reservationService.cancelDay(waiterId, day);
+        return new ResponseEntity<>(message, HttpStatus.OK);
+    }
 
 }

@@ -5,7 +5,9 @@ import java.util.List;
 import java.util.UUID;
 
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import com.example.restaurant_management_system.model.Reservation;
@@ -20,4 +22,11 @@ public interface ReservationRepository extends JpaRepository<Reservation, UUID> 
 
     @Query("SELECT r.status, COUNT(r) FROM Reservation r GROUP BY r.status")
     List<Object[]> countByStatus();
+
+    @Modifying(clearAutomatically = true)
+    @Query("UPDATE Reservation r SET r.status = :newStatus WHERE r.waiter.id = :waiterId AND r.reservationDate = :date AND r.status <> :keepStatus")
+    int cancelDay(@Param("waiterId") UUID waiterId,
+                  @Param("date") LocalDate date,
+                  @Param("newStatus") ReservationStatus newStatus,
+                  @Param("keepStatus") ReservationStatus keepStatus);
 }
