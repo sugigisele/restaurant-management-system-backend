@@ -58,6 +58,19 @@ public class ReservationController {
         }
     }
 
+    @PatchMapping("/{id}/status")
+    public ResponseEntity<String> changeStatus(@PathVariable("id") UUID id,
+                                           @RequestParam("status") ReservationStatus status) {
+    String message = reservationService.changeStatus(id, status);
+    if (message.equals("Reservation status updated successfully")) {
+        return new ResponseEntity<>(message, HttpStatus.OK);
+    } else if (message.equals("The reservation with that id does not exist")) {
+        return new ResponseEntity<>(message, HttpStatus.NOT_FOUND);
+    } else {
+        return new ResponseEntity<>(message, HttpStatus.BAD_REQUEST);
+    }
+}
+
     @GetMapping ("/between")
     public ResponseEntity<List<Reservation>> getBetween(@RequestParam  String start, @RequestParam  String end){
         LocalDate startDate = LocalDate.parse(start);
