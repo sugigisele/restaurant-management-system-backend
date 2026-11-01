@@ -24,9 +24,12 @@ public interface ReservationRepository extends JpaRepository<Reservation, UUID> 
     List<Object[]> countByStatus();
 
     @Modifying(clearAutomatically = true)
+    
     @Query("UPDATE Reservation r SET r.status = :newStatus WHERE r.waiter.id = :waiterId AND r.reservationDate = :date AND r.status <> :keepStatus")
-    int cancelDay(@Param("waiterId") UUID waiterId,
-                  @Param("date") LocalDate date,
-                  @Param("newStatus") ReservationStatus newStatus,
-                  @Param("keepStatus") ReservationStatus keepStatus);
+
+    int cancelDay(@Param("waiterId") UUID waiterId, @Param("date") LocalDate date, @Param("newStatus") ReservationStatus newStatus, @Param("keepStatus") ReservationStatus keepStatus);
+
+    long countByReservationDate(LocalDate reservationDate);
+
+    long countByStatusIs(ReservationStatus status);              
 }
