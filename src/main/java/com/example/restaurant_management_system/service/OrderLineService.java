@@ -32,7 +32,7 @@ public class OrderLineService {
         if (reservation.getStatus() != ReservationStatus.SEATED) {
             return "Order lines are only for SEATED reservations";
         }
-        orderline.setOrderDate(LocalDate.now());
+        orderline.setOrderedDate(LocalDate.now());
         orderline.setReservation(reservation);
         orderLineRepository.save(orderline);
         

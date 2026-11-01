@@ -13,6 +13,7 @@ import com.example.restaurant_management_system.model.Reservation;
 import com.example.restaurant_management_system.model.ReservationStatus;
 import com.example.restaurant_management_system.model.Waiter;
 import com.example.restaurant_management_system.repository.GuestRepository;
+import com.example.restaurant_management_system.repository.OrderLineRepository;
 import com.example.restaurant_management_system.repository.ReservationRepository;
 import com.example.restaurant_management_system.repository.WaiterRepository;
 
@@ -27,6 +28,9 @@ public class ReservationService {
 
     @Autowired 
     private WaiterRepository waiterRepository;
+
+    @Autowired
+    private OrderLineRepository orderLineRepository;
 
 
     public void attachRelations(Reservation reservation) {
@@ -91,15 +95,19 @@ public class ReservationService {
         }
         return Optional.empty();
     }
-
-    public String delete(UUID id ) {
-        if (reservationRepository.existsById(id)) {
-            reservationRepository.deleteById(id);
-            return "Reservation deleted successfully";
-
-        }
+    public String delete(UUID id) {
+    Optional<Reservation> found = reservationRepository.findById(id);
+    if (found.isEmpty()) {
         return "The reservation with that id does not exist";
     }
+
+    if (orderLineRepository.existsByReservation(found.get())) {
+        return "That reservation has order lines, delete them first";
+    }
+
+    reservationRepository.deleteById(id);
+    return "Reservation deleted successfully";
+}
 
     public List<Reservation> getByStatus(ReservationStatus status) {
         return reservationRepository.findByStatusOrderByReservationDateAsc(status);

@@ -5,7 +5,7 @@ import java.util.UUID;
 
 import jakarta.persistence.*;
 @Entity 
-@Table(name = "order_lines")
+@Table(name = "order_line")
 public class OrderLine {
 
 
@@ -15,13 +15,15 @@ public class OrderLine {
     private UUID id;
 
     private String dishName;
-    private String specialRequests;
+    private String specialRequest;
     private int quantity;
     private LocalDate orderedDate;
 
     @ManyToOne 
     @JoinColumn (name = "reservation_id")
     private Reservation reservation;
+    
+    
 
     public UUID getId(){
         return id;
@@ -39,12 +41,12 @@ public class OrderLine {
         this.dishName = dishName;
     }
 
-    public String getSpecialRequests() {
-        return specialRequests;
+    public String getSpecialRequest() {
+        return specialRequest;
     }
 
-    public void setSpecialRequests(String specialRequests) {
-        this.specialRequests = specialRequests;
+    public void setSpecialRequest(String specialRequest) {
+        this.specialRequest = specialRequest;
     }
 
     public int getQuantity() {
@@ -55,12 +57,12 @@ public class OrderLine {
         this.quantity = quantity;
     }
 
-    public LocalDate getOrderDate() {
+    public LocalDate getOrderedDate() {
         return orderedDate;
     }
 
-    public void setOrderDate(LocalDate orderDate) {
-        this.orderedDate = orderDate;
+    public void setOrderedDate(LocalDate orderedDate) {
+        this.orderedDate = orderedDate;
     }
 
     public Reservation getReservation() {
