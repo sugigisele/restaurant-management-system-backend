@@ -13,7 +13,7 @@ import com.example.restaurant_management_system.model.DiningTable;
 import com.example.restaurant_management_system.service.DiningTableService;
 
 @RestController 
-@RequestMapping ("/api/dining_tables")
+@RequestMapping ("/api/dining-tables")
 
 public class DiningTableController {
 
