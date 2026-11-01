@@ -6,6 +6,7 @@ import java.util.Optional;
 import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.*;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -98,6 +99,23 @@ public class ReservationController {
         LocalDate day = LocalDate.parse(date);
         String message = reservationService.cancelDay(waiterId, day);
         return new ResponseEntity<>(message, HttpStatus.OK);
+    }
+
+        
+    @GetMapping("/page")
+    public ResponseEntity<Page<Reservation>> getPage(  @RequestParam(value = "page", defaultValue = "0") int page, @RequestParam(value = "size", defaultValue = "5") int size, @RequestParam(value = "sort", defaultValue = "reservationDate,asc") String sort) {
+
+         String[] parts = sort.split(",");
+         String field = parts[0];
+
+        Sort.Direction direction = Sort.Direction.ASC;
+        if (parts.length > 1) {
+            if (parts[1].equalsIgnoreCase("desc")) {
+                direction = Sort.Direction.DESC;
+            }
+        }
+          Pageable pageable = PageRequest.of(page, size, Sort.by(direction, field));
+        return new ResponseEntity<>(reservationService.getPage(pageable), HttpStatus.OK);
     }
 
 }
