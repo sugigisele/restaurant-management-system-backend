@@ -153,4 +153,7 @@ public class ReservationService {
         return "Reservation status updated successfully";
     }
     
+    public List<Object[]> getStatsByStatus() {
+        return reservationRepository.countByStatus();
+    }
 }

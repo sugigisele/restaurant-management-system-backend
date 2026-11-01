@@ -78,6 +78,11 @@ public class ReservationController {
         return new ResponseEntity<>(reservationService.getBetween(startDate, endDate), HttpStatus.OK);
     }
 
+    @GetMapping("/stats/by-status")
+    public ResponseEntity<List<Object[]>> getStatsByStatus() {
+        return new ResponseEntity<>(reservationService.getStatsByStatus(), HttpStatus.OK);
+    }
+
     @DeleteMapping ("/delete/{id}")
     public ResponseEntity<String> delete(@PathVariable UUID id){
         String message = reservationService.delete(id);
